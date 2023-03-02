@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,8 +8,9 @@ import ButtonCustom from './ButtonCustom';
 
 interface MovieItemProps {
   movie: Movie;
+  onAction?: () => void;
 }
-const MovieCardHorizontal = ({movie}: MovieItemProps) => {
+const MovieCardHorizontal = ({movie, onAction}: MovieItemProps) => {
   const numStars = Math.floor(movie.vote_average / 2);
 
   const stars = new Array(numStars).fill('').map((_, index) => {
@@ -42,12 +43,14 @@ const MovieCardHorizontal = ({movie}: MovieItemProps) => {
             backgroundColor={COLORS.primaryYellow}
             textColor={COLORS.secondaryBlack}
           />
-          <Icon
-            name="heart"
-            size={30}
-            color={COLORS.gray}
-            style={{margin: 2}}
-          />
+          <TouchableOpacity onPress={onAction}>
+            <Icon
+              name="heart"
+              size={30}
+              color={COLORS.gray}
+              style={{margin: 2}}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>

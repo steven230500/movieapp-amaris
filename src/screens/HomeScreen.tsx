@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -16,12 +16,15 @@ import {COLORS, FONTS} from '../constants/constans';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MovieCard from '../components/CardSerie';
 import MovieCardHorizontal from '../components/CardHorizontalSerie';
+import {FavoriteContext} from '../context/FavoritesContext';
 
 interface HomeScreenProps {
-  navigation: NavigationProp<ParamListBase, 'LoginScreen'>;
+  navigation: NavigationProp<ParamListBase, 'HomeScreen'>;
 }
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
+  const {addFavorite} = useContext(FavoriteContext);
+
   const [popularSeries, setPopularSeries] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [recommendedSeries, setRecommendedSeries] = useState<Movie[]>([]);
@@ -87,7 +90,12 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
             data={recommendedSeries}
             keyExtractor={item => item.id.toString()}
             showsVerticalScrollIndicator={false}
-            renderItem={({item}) => <MovieCardHorizontal movie={item} />}
+            renderItem={({item}) => (
+              <MovieCardHorizontal
+                movie={item}
+                onAction={() => addFavorite(item)}
+              />
+            )}
           />
         </View>
       </View>

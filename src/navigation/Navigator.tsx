@@ -14,6 +14,7 @@ import SearchScreen from '../screens/SearchScreen';
 import RecentScreen from '../screens/RecentScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {COLORS} from '../constants/constans';
+import {FavoriteProvider} from '../context/FavoritesContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -138,20 +139,22 @@ const AppNavigator = () => {
   }, [isAuthenticated]);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? 'App' : 'Auth'}>
-        <Stack.Screen
-          name="App"
-          component={TabNavigator}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Auth"
-          component={AuthStackNavigator}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FavoriteProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={isAuthenticated ? 'App' : 'Auth'}>
+          <Stack.Screen
+            name="App"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Auth"
+            component={AuthStackNavigator}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoriteProvider>
   );
 };
 
