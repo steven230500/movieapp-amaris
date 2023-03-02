@@ -23,6 +23,7 @@ interface HomeScreenProps {
 
 const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [popularSeries, setPopularSeries] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [recommendedSeries, setRecommendedSeries] = useState<Movie[]>([]);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
   const logout = async () => {
     try {
       await AsyncStorage.setItem('isAuthenticated', 'false');
-      navigation.navigate('Welcome', {screen: 'Welcome'});
+      navigation.navigate('Auth', {screen: 'Welcome'});
     } catch (error) {
       console.error(error);
     }

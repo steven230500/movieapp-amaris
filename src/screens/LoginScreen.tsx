@@ -31,7 +31,7 @@ const LoginScreen = ({route, navigation}: LoginScreenProps) => {
 
   const handleLogin = async () => {
     if (await authenticateUser(username, password)) {
-      navigation.navigate('Home');
+      navigation.navigate('App', {screen: 'Home'});
     } else {
       Alert.alert(
         'Error',

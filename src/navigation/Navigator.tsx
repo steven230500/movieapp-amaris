@@ -66,6 +66,66 @@ const RecentStack = () => {
   );
 };
 
+const AuthStack = createStackNavigator();
+
+const AuthStackNavigator = () => {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{headerShown: false}}
+      />
+      <AuthStack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <AuthStack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{headerShown: false}}
+      />
+    </AuthStack.Navigator>
+  );
+};
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarStyle: {
+          backgroundColor: COLORS.secondaryBlack,
+        },
+        tabBarActiveTintColor: COLORS.primaryYellow,
+        tabBarInactiveTintColor: COLORS.white,
+        headerShown: false,
+
+        tabBarIcon: ({color, size}) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Search') {
+            iconName = 'search';
+          } else if (route.name === 'Favorites') {
+            iconName = 'star';
+          } else if (route.name === 'Recent') {
+            iconName = 'spinner';
+          }
+
+          return (
+            <Icon name={iconName ? iconName : ''} size={size} color={color} />
+          );
+        },
+      })}>
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Favorites" component={FavoritesStack} />
+      <Tab.Screen name="Recent" component={RecentStack} />
+      <Tab.Screen name="Search" component={SearchStack} />
+    </Tab.Navigator>
+  );
+};
+
 const AppNavigator = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -77,69 +137,20 @@ const AppNavigator = () => {
     });
   }, [isAuthenticated]);
 
-  if (!isAuthenticated) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarStyle: {
-            backgroundColor: COLORS.secondaryBlack,
-          },
-          tabBarActiveTintColor: COLORS.primaryYellow,
-          tabBarInactiveTintColor: COLORS.white,
-          headerShown: false,
-
-          tabBarIcon: ({color, size}) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = 'home';
-            } else if (route.name === 'Search') {
-              iconName = 'search';
-            } else if (route.name === 'Favorites') {
-              iconName = 'star';
-            } else if (route.name === 'Recent') {
-              iconName = 'spinner';
-            }
-
-            return (
-              <Icon name={iconName ? iconName : ''} size={size} color={color} />
-            );
-          },
-        })}>
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Favorites" component={FavoritesStack} />
-        <Tab.Screen name="Recent" component={RecentStack} />
-        <Tab.Screen name="Search" component={SearchStack} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName={isAuthenticated ? 'App' : 'Auth'}>
+        <Stack.Screen
+          name="App"
+          component={TabNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Auth"
+          component={AuthStackNavigator}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
