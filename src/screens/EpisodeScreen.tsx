@@ -106,6 +106,7 @@ const EpisodeScreen = ({route, navigation}: Props) => {
           <TouchableOpacity
             style={{
               position: 'absolute',
+              top: 100,
               width: 60,
               height: 60,
               alignItems: 'center',
@@ -154,11 +155,6 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   imageContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -168,6 +164,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginTop: 20,
+    padding: 20,
     alignItems: 'center',
   },
   title: {
