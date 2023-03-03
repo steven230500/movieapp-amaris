@@ -153,7 +153,7 @@ const AppNavigator = () => {
   return (
     <FavoriteProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={'App'}>
+        <Stack.Navigator initialRouteName={isAuthenticated ? 'App' : 'Auth'}>
           <Stack.Screen
             name="App"
             component={TabNavigator}
