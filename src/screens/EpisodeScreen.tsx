@@ -38,13 +38,11 @@ const EpisodeScreen = ({route, navigation}: Props) => {
     MovieApi.get(`/tv/${movie.id}/season/${1}/episode/${numberEpisode}`)
       .then(response => {
         setEpisode(response.data);
-        console.log('dsd', episode);
       })
       .catch(error => {
         console.error(error);
         setFinalEpisode(true);
         setNumberEpisode(numberEpisode - 1);
-        console.log('dsd');
       });
   }, [numberEpisode]);
 

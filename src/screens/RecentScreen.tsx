@@ -18,13 +18,9 @@ const RecentScreen = ({navigation}: RecentScreenProps) => {
   useEffect(() => {
     MovieApi.get('/tv/airing_today')
       .then(response => {
-        console.log('airriririr', response);
-
         setRecentSeries(response.data.results);
       })
       .catch(error => {
-        console.log('airriririr', error);
-
         console.error(error);
       });
   }, []);
