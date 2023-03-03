@@ -7,8 +7,9 @@ import Movie from '../models/Movie';
 
 interface MovieItemProps {
   movie: Movie;
+  onPress?: () => void;
 }
-const MovieCard = ({movie}: MovieItemProps) => {
+const MovieCard = ({movie, onPress}: MovieItemProps) => {
   const numStars = Math.floor(movie.vote_average / 2);
 
   const stars = new Array(numStars).fill('').map((_, index) => {
@@ -24,7 +25,7 @@ const MovieCard = ({movie}: MovieItemProps) => {
   });
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image
         source={{uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`}}
         style={styles.poster}

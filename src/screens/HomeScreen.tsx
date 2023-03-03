@@ -77,7 +77,16 @@ const HomeScreen = ({navigation}: HomeScreenProps) => {
           keyExtractor={item => item.id.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => <MovieCard movie={item} />}
+          renderItem={({item}) => (
+            <MovieCard
+              movie={item}
+              onPress={() =>
+                navigation.navigate('Serie', {
+                  movie: item,
+                })
+              }
+            />
+          )}
         />
         <Text style={styles.subTitle}>See All {'>'}</Text>
 
