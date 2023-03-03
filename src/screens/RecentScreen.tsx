@@ -46,7 +46,16 @@ const RecentScreen = ({navigation}: RecentScreenProps) => {
           data={recentSeries}
           keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <MovieCardHorizontal movie={item} />}
+          renderItem={({item}) => (
+            <MovieCardHorizontal
+              movie={item}
+              onAction={() =>
+                navigation.navigate('Episode', {
+                  movie: item,
+                })
+              }
+            />
+          )}
         />
       </View>
     </View>
