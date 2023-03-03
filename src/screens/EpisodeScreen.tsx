@@ -1,5 +1,5 @@
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MovieApi from '../api/MovieApi';
 import ButtonCustom from '../components/ButtonCustom';
 import {COLORS, FONTS} from '../constants/constans';
+import {FavoriteContext} from '../context/FavoritesContext';
 import Episode from '../models/Episode';
 import Movie from '../models/Movie';
 
@@ -26,6 +27,7 @@ type Props = {
 };
 
 const EpisodeScreen = ({route, navigation}: Props) => {
+  const {addFavorite} = useContext(FavoriteContext);
   const {movie} = route.params;
   const backgroundImageUri = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
   const [episode, setEpisode] = useState<Episode>();
@@ -74,7 +76,9 @@ const EpisodeScreen = ({route, navigation}: Props) => {
             </TouchableOpacity>
             <Text style={styles.headerText}>{movie.name}</Text>
           </View>
-          <Icon name="heart" size={25} color="#fff" />
+          <TouchableOpacity onPress={() => addFavorite(movie)}>
+            <Icon name="heart" size={25} color="#fff" />
+          </TouchableOpacity>
         </View>
         <View style={styles.header}>
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
